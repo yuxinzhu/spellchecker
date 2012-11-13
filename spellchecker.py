@@ -3,10 +3,10 @@ import os, itertools
 VOWELS = "aoeiu"
 DEFAULT_DICTIONARY = "/usr/share/dict/words"
 NOT_FOUND = "NO SUGGESTION"
-GENERIC_MESSAGE = "Please enter a word to spell check\n --exit to quit\n --verify to generate a list of possible mis-spellings (ie. sheep --verify)\n"
+GENERIC_MESSAGE = "Please enter a word to spell check\n --verify to generate a list of possible mis-spellings (ie. sheep --verify)\n --exit to quit\n"
 
 def main():
-    print "Spell Check v0.1: Written for twitch.tv, Note on implementation at \n"
+    print "SpellChecker: Note on implementation at https://github.com/yuxinzhu/spellchecker\n"
     print GENERIC_MESSAGE
     dictionary = initialize_dictionary()
     while True:
@@ -145,10 +145,3 @@ def spawn_duplicate(word):
 
 if __name__ == "__main__":
     main()
-
-
-
-
-
-
-
