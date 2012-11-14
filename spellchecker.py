@@ -13,7 +13,7 @@ def main():
         word = raw_input("> ")
         if "--verify" in word:
             success = True
-            word = word.strip("--verify").strip().lower()
+            word = word.split("--verify")[0].strip().lower()
             if word not in dictionary:
                 print "word to verify must already exist in dictionary"
                 continue
