@@ -3,55 +3,7 @@ import os, itertools
 VOWELS = "aoeiu"
 DEFAULT_DICTIONARY = "/usr/share/dict/words"
 NOT_FOUND = "NO SUGGESTION"
-GENERIC_MESSAGE = "Please enter a word to spell check\n --verify to generate a list of possible mis-spellings (ie. sheep --verify)\n --exit to quit\n"
-
-def main():
-    print "SpellChecker: Note on implementation at https://github.com/yuxinzhu/spellchecker\n"
-    print GENERIC_MESSAGE
-    dictionary = initialize_dictionary()
-    while True:
-        word = raw_input("> ")
-        if "--verify" in word:
-            success = True
-            word = word.split("--verify")[0].strip().lower()
-            if word not in dictionary:
-                print "word to verify must already exist in dictionary"
-                continue
-            tmp = permutate_vowels(word, dictionary)
-            possible_words = itertools.chain(*map(spawn_duplicate, tmp))
-            num_possible_words = len(list(itertools.chain(*map(spawn_duplicate, tmp)))) #just for fun
-            for misspelling in possible_words:
-                print misspelling
-                if not spell_check(misspelling, dictionary):
-                    print ("\nThe following mis-spelling: \"" + misspelling + "\" was not found in the dictionary")
-                    success = False
-                    break
-            if success:
-                print "\n\nSuccess! All " + str(num_possible_words) + " possible mis-spellings were successfuly spell checked."
-        elif "--exit" in word:
-            print "See you next time!"
-            break
-        else:
-            word = word.strip().lower()
-            if word == "":
-                print GENERIC_MESSAGE
-            else:
-                found = False
-                unduplicated = eliminate_duplicate(word)
-                for elem in unduplicated:
-                    if elem in dictionary:
-                        print elem
-                        found = True
-                        break
-                if not found:
-                    for elem in unduplicated:
-                        rst = permutate_vowels(elem, dictionary, complete = False)
-                        if isinstance(rst, str):
-                            print rst
-                            found = True
-                            break
-                if not found:
-                    print NOT_FOUND
+GENERIC_MESSAGE = "Please enter a word to spell-check\n --verify to generate a list of possible mis-spellings (ie. sheep --verify)\n --exit to quit\n"
 
 def initialize_dictionary():
     """
@@ -142,6 +94,56 @@ def spawn_duplicate(word):
     for elem in permutations:
         rtn.append("".join(map(lambda index: word[index] * int(elem[index]), range(len(word)))))
     return rtn
+
+def main():
+    print "SpellChecker: Note on implementation at https://github.com/yuxinzhu/spellchecker\n"
+    print GENERIC_MESSAGE
+    dictionary = initialize_dictionary()
+    while True:
+        word = raw_input("> ")
+        if "--verify" in word:
+            success = True
+            word = word.split("--verify")[0].strip().lower()
+            if word not in dictionary:
+                print "word to verify must already exist in dictionary"
+                continue
+            tmp = permutate_vowels(word, dictionary)
+            possible_words = itertools.chain(*map(spawn_duplicate, tmp))
+            num_possible_words = len(list(itertools.chain(*map(spawn_duplicate, tmp)))) #just for fun
+            for misspelling in possible_words:
+                print misspelling
+                if not spell_check(misspelling, dictionary):
+                    print ("\nThe following mis-spelling: \"" + misspelling + "\" was not found in the dictionary")
+                    success = False
+                    break
+            if success:
+                print "\n\nSuccess! All " + str(num_possible_words) + " possible mis-spellings were successfully generated and spell-checked."
+
+        elif "--exit" in word:
+            print "See you next time!"
+            break
+
+        else:
+            word = word.strip().lower()
+            if word == "":
+                print GENERIC_MESSAGE
+            else:
+                found = False
+                unduplicated = eliminate_duplicate(word)
+                for elem in unduplicated:
+                    if elem in dictionary:
+                        print elem
+                        found = True
+                        break
+                if not found:
+                    for elem in unduplicated:
+                        rst = permutate_vowels(elem, dictionary, complete = False)
+                        if isinstance(rst, str):
+                            print rst
+                            found = True
+                            break
+                if not found:
+                    print NOT_FOUND
 
 if __name__ == "__main__":
     main()
