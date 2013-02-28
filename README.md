@@ -39,25 +39,29 @@ SpellChecker supports two main functionalities. Typing a word will automatically
 
 	> sheeeeep
 	sheep
+	> acceptible
+	acceptable
+	> ignorence
+	ignorance
 	> yuxin
 	NO SUGGESTION
 
-Typing a correctly spelled word, followed by `--verify` will generate all possible mis-spellings of a word, and ensures that there are no occurences of "NO SUGGESTION" in the output.
+Typing a correctly spelled word, followed by `--verify` will generate all possible mis-spellings of a word, and spell-check each one.
 
 	> awesome --verify
 	awasama
 	awasamaa
 	awasamma
 	awasammaa
-	
+
 	…
-	
+
 	uuwwuussuumuu
 	uuwwuussuummu
 	uuwwuussuummuu
 
 
-	Success! All 80000 possible mis-spellings were successfuly spell checked.
+	Success! All 80,000 possible mis-spellings were successfully generated and spell-checked.
 
 
 Typing `--exit` at any time will quit the program.
@@ -69,7 +73,7 @@ Typing `--exit` at any time will quit the program.
 
 __[Note to Reader]__ Below, the word, "permutation", is used interchangeably with cartesian product for ease of use, such that "permutation" on `{1,2}` is equivalent to `product('12', repeat=2) = [('1', '1'), ('1', '2'), ('2', '1'), ('2', '2')]`
 
-The program first loads a list of words of length, `n`, into a set whose initial overhead takes `O(n)` time, but whose amortized lookup time is `O(1)`. 
+The program first loads a list of words of length, `n`, into a set whose initial overhead takes `O(n)` time, but whose amortized lookup time is `O(1)`.
 
 Suppose the user inputs a word of length, `m`, with `v` vowels. The program first generates a list of possible words permuted on the number duplicate characters, such that the word `"teepee"` results in `['tepe', 'tepee', 'teepe', 'teepee']`. Permutations of duplicates are generated using `itertools.product()`. The overall time complexity of this function is roughly `O(2^d + m)` since the dominant operation iterates through all elements in the cartesian product of length `{1,2}`, repeated `d` times, where `d` is the number of duplicate instances (ie. teepee has two duplicate instances [2^2]).
 
