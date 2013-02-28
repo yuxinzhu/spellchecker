@@ -3,7 +3,7 @@ import os, itertools
 VOWELS = "aoeiu"
 DEFAULT_DICTIONARY = "/usr/share/dict/words"
 NOT_FOUND = "NO SUGGESTION"
-GENERIC_MESSAGE = "Please enter a word to spell-check\n --verify to generate a list of possible mis-spellings (ie. sheep --verify)\n --exit to quit\n"
+GENERIC_MESSAGE = "Please enter a word to spell-check (ie. ignorence) \n--verify to generate a list of possible mis-spellings (ie. sheep --verify)\n--exit to quit\n"
 
 def initialize_dictionary():
     """
@@ -24,6 +24,7 @@ def spell_check(word, dictionary):
     """
     Returns True if valid suggestion can be found, False otherwise
 
+    *function used in --verify only
     """
     unduplicated = eliminate_duplicate(word)
     for elem in unduplicated:
@@ -37,6 +38,13 @@ def permutate_vowels(word, dictionary, complete = True):
     between every possible vowel, setting complete to False will return a string
     immediately if a suggestion is found in the dictionary
 
+    >>> permutate_vowels('cat', initialize_dictionary())
+    ['cat', 'cot', 'cet', 'cit', 'cut']
+
+    >>> permutate_vowels('cat', initialize_dictionary(), complete=False)
+    'cat'
+
+    *function used in --verify only
     """
     rtn = []
     vowel_locations = [index for index in range(len(word)) if word[index] in VOWELS]
