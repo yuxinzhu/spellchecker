@@ -8,13 +8,13 @@ Your solution should be faster than O(n) per word checked, where n is the length
 
 For example:
 
-> sheeeeep
-sheep
-> peepple
-people
-> sheeple
-NO SUGGESTION
-The class of spelling mistakes to be corrected is as follows:
+	> sheeeeep
+	sheep
+	> peepple
+	people
+	> sheeple
+	NO SUGGESTION
+	The class of spelling mistakes to be corrected is as follows:
 
 Case (upper/lower) errors: "inSIDE" => "inside"
 Repeated letters: "jjoobbb" => "job"
